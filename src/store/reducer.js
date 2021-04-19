@@ -1,3 +1,5 @@
+import { CHANGE_INPUT, ADD_ITEM, DELETE_ITEM} from './actionTypes'
+
 const defaultState = {
   inputValue: 'write something',
   list: [
@@ -10,13 +12,13 @@ const defaultState = {
 
 export default (state = defaultState, actions) => {
   // reducer 里面只能接收 state， 不能改变state
-  if(actions.type === 'changeInput') {
+  if(actions.type === CHANGE_INPUT) {
     let newState = JSON.parse(JSON.stringify(state))
     newState.inputValue = actions.value;
     return newState
   }
 
-  if(actions.type === 'ADD_ITEM') {
+  if(actions.type === ADD_ITEM) {
     let nextState = JSON.parse(JSON.stringify(state));
     nextState.list.push(nextState.inputValue);
     nextState.inputValue = '';
@@ -24,7 +26,7 @@ export default (state = defaultState, actions) => {
     return nextState
   }
 
-  if(actions.type === 'DELETE_ITEM') {
+  if(actions.type === DELETE_ITEM) {
     //  把原来的 state 拷贝一份
     let nextState = JSON.parse(JSON.stringify(state));
     nextState.list.splice(actions.payload, 1)
@@ -51,3 +53,10 @@ export default (state = defaultState, actions) => {
  * 4. 组件重新设置 setState, view 重新渲染。
 */
 
+/**
+ *  问题 ，reducer 巨大，太多的业务逻辑。
+ *  解决方法， 拆分 reducer.
+ *  提供了 combineReducers, 只需要定义各个子 reducer 函数， 然后将让门合成一个大的
+ *  reducer
+ *  
+ * */ 

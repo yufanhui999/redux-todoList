@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css'
 import { Input,Button, List} from 'antd';
 import store from './store'
+// import {CHANGE_INPUT, ADD_ITEM, DELETE_ITEM} from './store/actionTypes'
+import { changeInputAction,addItemAction ,deleteItemAction} from "./store/actionCreator";
 
 
 class TodoList extends Component {
@@ -14,14 +16,18 @@ class TodoList extends Component {
 
   handleInputChange(e) {
     // 改变 store 里面的值。
-    const action = {
-      type: 'changeInput',
-      value: e.target.value
-    }
+    // const action = {
+    //   type: CHANGE_INPUT,
+    //   value: e.target.value
+    // }
     // 派发一个actions
     // 这里有一个很重要的地方，
     // store 只是一个仓库，并没有管理能力，
     // 会把接收到的 action 自动转发给 reducer
+
+
+    // 引入 actionsCreator, 修改方式，统一管理。
+    const action = changeInputAction(e.target.value);
     store.dispatch(action)
     // console.log(e.target.value)
   }
@@ -36,12 +42,14 @@ class TodoList extends Component {
   }
 
   handleAdd() {
-    const action = { type: 'ADD_ITEM'}
+    // const action = { type: ADD_ITEM};
+    const action = addItemAction()
     store.dispatch(action)
   }
 
   deleteItem(index) {
-    const action = { type: 'DELETE_ITEM', payload: index}
+    // const action = { type: DELETE_ITEM, payload: index }
+    const action = deleteItemAction(index)
     store.dispatch(action)
   }
   render() { 
